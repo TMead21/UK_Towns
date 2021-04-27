@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>Display map navigation controls</title>
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+    <style>
+	body { margin: 0; padding: 0; }
+	#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+</head>
+<body>
+<h2>towns - Where do you want to go?</h2>
+
+<div id="map"></div>
+<script>
+	// TO MAKE THE MAP APPEAR YOU MUST
+	// ADD YOUR ACCESS TOKEN FROM
+	// https://account.mapbox.com
+	mapboxgl.accessToken = 'pk.eyJ1IjoianNvbWEiLCJhIjoibFJmYl9JWSJ9.AUm8d76cbOvVEn2mMeG_ZA';
+var map = new mapboxgl.Map({
+container: 'map', // container id
+style: 'mapbox://styles/mapbox/streets-v11',
+//center: [-74, 40.71], // starting position
+center: [{{ selected_town.longitude }}, {{ selected_town.latitude }}], // starting position
+zoom: 15 // starting zoom
+});
+var featureCollection = []; // Initialize empty collection
+// Your longLat collection
+var longLat = {{ towns }};
+var town_name = {{ names|safe }};
+//var longLat = [[ '-73.913994', '40.888382'], ['-73.91395', '40.88716']];
+//var town_name = ['RIVERDALE  KINGSBRIDGE ACADEMY (MIDDLE town  H', 'P.S. 024 SPUYTEN DUYVIL'];
+//var cars = ["Saab", "Volvo"];
+//var cars = {{ names|safe }};
+// for every item object within longLat
+for(var itemIndex in longLat) {
+  // push new feature to the collection
+  featureCollection.push({
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": longLat[itemIndex]
+    },
+    "properties": {
+      "title": town_name[itemIndex],
+      "icon": "town"
+    }
+  });
+}
+// Add zoom and rotation controls to the map.
+map.addControl(new mapboxgl.NavigationControl());
+map.on('load', function () {
+  map.addLayer({
+    "id": "points",
+    "type": "symbol",
+    "source": {
+    "type": "geojson",
+      "data": {
+        "type": "FeatureCollection",
+        "features": featureCollection
+      }
+    },
+    "layout": {
+      "icon-image": "{icon}-15",
+      "text-field": "{title}",
+      "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+      "text-offset": [0, 0.6],
+      "text-anchor": "top"
+    }
+  });
+});
+</script>
+
+</body>
+</html>

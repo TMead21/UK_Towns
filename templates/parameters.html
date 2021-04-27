@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Enter Search Parameters</h1>
+    <form action="" method="post" novalidate>
+        {{ form1.hidden_tag() }}
+        <p>
+            {{ form1.searchCentre.label }}<br>
+            {{ form1.searchCentre(size=15) }}<br>
+        </p>
+        <p>
+            {{ form2.minimum.label }}<br>
+            {{ form2.minimum(size=3) }}<br>
+        </p>
+        <p>
+            {{ form3.maximum.label }}<br>
+            {{ form3.maximum(size=3) }}<br>
+        </p>
+        <p>
+            {{ form4.townNumber.label }}<br>
+            {{ form4.townNumber(size=3) }}<br>
+        </p>
+        <p>{{ form1.submit() }}</p>
+    </form>
+{% endblock %}
