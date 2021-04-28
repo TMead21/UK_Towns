@@ -89,7 +89,7 @@ def test_conversion_of_text_to_number(): #working
 #     session = get_session()
 #     this_distance = town_Distances()
 #     all_other_distances = this_distance.create_one_towns_distances(session, 1)
-#     assert all_other_distances == 1639
+#     assert all_other_distances == 1798
 
 
 # WARNING - this test generates the distances (between all of the towns )
@@ -100,4 +100,4 @@ def test_conversion_of_text_to_number(): #working
 #     session = get_session()
 #     this_distance =town_Distances()
 #     all_other_distances = this_distance.create_all_towns_distances(session)
-#     assert all_other_distances == 2687960
+#     assert all_other_distances == 3234602
